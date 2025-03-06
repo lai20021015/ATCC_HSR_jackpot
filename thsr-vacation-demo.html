@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高鐵假期 - Demo頁面</title>
+    <style>
+        /* 基本樣式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft JhengHei", "微軟正黑體", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        /* 頂部導航欄 */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .language-selector, .login-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .button {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .login-button {
+            background-color: #f0f0f0;
+        }
+
+        /* 主橫幅 */
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 340px;
+            background-image: url('/api/placeholder/1200/340');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* 搜尋框 */
+        .search-container {
+            position: absolute;
+            bottom: -30px;
+            width: 90%;
+            max-width: 1200px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr) auto;
+            gap: 10px;
+        }
+
+        .search-input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .search-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        /* 服務選項區 */
+        .services {
+            display: flex;
+            justify-content: space-around;
+            padding: 80px 50px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-item {
+            text-align: center;
+            width: 20%;
+        }
+
+        .service-icon {
+            background-color: #f0f8f0;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-icon img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .service-title {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        /* 主題旅遊區 */
+        .themes {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 50px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #4CAF50;
+        }
+
+        .theme-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .theme-tag {
+            padding: 8px 15px;
+            background-color: #f0f0f0;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .theme-tag.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* 抽獎系統區域 */
+        .lottery-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .lottery-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #3449a6;
+            margin-bottom: 30px;
+        }
+
+        /* 抽獎系統容器 - 預留給您的React組件 */
+        #lottery-container {
+            min-height: 500px;
+            border: 1px dashed #ddd;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #333;
+            color: white;
+        }
+
+        /* 頁腳 */
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 50px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .footer-column h3::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: #4CAF50;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 頂部導航欄 -->
+    <div class="header">
+        <div class="logo">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgNDAiPjxwYXRoIGQ9Ik0yMCAxMGMwIDAgNDAtNSA2MCAxNSIgc3Ryb2tlPSIjRkY5OTAwIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJNMjAgMjBjMCAwIDQwLTUgNjAgMTUiIHN0cm9rZT0iIzM5QjU0QSIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTEwLDI1IEwxNSwxNSBMMzAsNSBMNTAsMTAgTDYwLDUgTDc1LDE1IEw4MCwyNSBMNzUsMzUgTDMwLDM1IEwxNSwzNSBMMTAsMjUgWiIgZmlsbD0iIzAwNzBCQiIvPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjUiIHI9IjUiIGZpbGw9IiNGRkYiLz48Y2lyY2xlIGN4PSI3MCIgY3k9IjI1IiByPSI1IiBmaWxsPSIjRkZGIi8+PHBhdGggZD0iTTMwLDIwIEwzNSwyMCBMNDAsMTUgTDQ1LDIwIEw1MCwyMCBMNTUsMTUgTDYwLDIwIEw1MCwzMCBMNDAsMzAgTDMwLDIwIFoiIGZpbGw9IiNGRkYiLz48L3N2Zz4=" alt="高鐵假期">
+            <span style="font-size: 1.5rem; font-weight: bold; color: #0070BB; margin-left: 10px;">高鐵假期</span>
+        </div>
+        <div class="nav-links">
+            <a href="#">探索台灣</a>
+            <a href="#">主題優惠</a>
+            <a href="#">訂單查詢</a>
+            <a href="#">最新消息</a>
+        </div>
+        <div class="right-menu">
+            <div class="language-selector">
+                <button class="button">English</button>
+            </div>
+            <div class="login-buttons">
+                <button class="button">特約用戶專區</button>
+                <button class="button login-button">TGo 會員登入</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主橫幅 -->
+    <div class="banner">
+        <h1>旅行 從此開始</h1>
+        <p>發掘 • 體驗 • 精彩</p>
+
+        <!-- 搜尋框 -->
+        <div class="search-container">
+            <form class="search-form">
+                <input type="text" placeholder="輸入目的地或關鍵字" class="search-input">
+                <select class="search-input">
+                    <option>出發站</option>
+                </select>
+                <select class="search-input">
+                    <option>旅遊類型</option>
+                </select>
+                <input type="date" placeholder="出發日期" class="search-input">
+                <button type="submit" class="search-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 服務選項區 -->
+    <div class="services">
+        <div class="service-item">
+            <div class="service-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9"/><path d="M3 9V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4"/><path d="M12 12h4"/><path d="M12 16h4"/><path d="M8 12h.01"/><path d="M8 16h.01"/></svg>
+            </div>
+            <div class="service-title">高鐵+飯店</div>
+        </div>
+        <div class="service-item">
+            <div class="service-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            </div>
+            <div class="service-title">高鐵+行程</div>
+        </div>
+        <div class="service-item">
+            <div class="service-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01"/><path d="M7 13h.01"/><path d="M17 7h.01"/><path d="M17 13h.01"/></svg>
+            </div>
+            <div class="service-title">高鐵+租車</div>
+        </div>
+        <div class="service-item">
+            <div class="service-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M20 12v4H6a2 2 0 0 0-2 2c0 1.1.9 2 2 2h12v-4"/></svg>
+            </div>
+            <div class="service-title">高鐵+票券</div>
+        </div>
+    </div>
+
+    <!-- 主題旅遊區 -->
+    <div class="themes">
+        <h2 class="section-title">主題帶玩</h2>
+        <div class="theme-tags">
+            <div class="theme-tag active">29天前預購優惠</div>
+            <div class="theme-tag">高雄演唱 · 哈瑪星號</div>
+            <div class="theme-tag">小資精省 · 限定優惠</div>
+            <div class="theme-tag">日月潭好好玩</div>
+            <div class="theme-tag">搭高鐵 · 送住宿</div>
+            <div class="theme-tag">演唱會住宿推薦</div>
+        </div>
+    </div>
+
+    <!-- 抽獎系統區域 -->
+    <div class="lottery-section">
+        <h2 class="lottery-title">🚄 高鐵小卡抽獎活動 🚄</h2>
+        <div id="lottery-container">
+            <!-- 這裡會放置您的React抽獎組件 -->
+            <h3>🎯 高鐵小卡抽獎 🎯</h3>
+            <div style="margin: 20px 0; font-size: 1.2em;">剩餘抽獎機會:99</div>
+            <div style="width: 300px; height: 300px; border-radius: 50%; background-color: #444; border: 5px solid white; margin: 20px auto; position: relative; overflow: hidden;">
+                <!-- 模擬輪盤 -->
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    <svg width="300" height="300" viewBox="0 0 300 300">
+                        <circle cx="150" cy="150" r="150" fill="#333" />
+                        <!-- 模擬輪盤分區 -->
+                        <path d="M150,150 L150,0 A150,150 0 0,1 270,75 Z" fill="#FF5252" />
+                        <path d="M150,150 L270,75 A150,150 0 0,1 270,225 Z" fill="#4CAF50" />
+                        <path d="M150,150 L270,225 A150,150 0 0,1 150,300 Z" fill="#2196F3" />
+                        <path d="M150,150 L150,300 A150,150 0 0,1 30,225 Z" fill="#FFEB3B" />
+                        <path d="M150,150 L30,225 A150,150 0 0,1 30,75 Z" fill="#9C27B0" />
+                        <path d="M150,150 L30,75 A150,150 0 0,1 150,0 Z" fill="#00BCD4" />
+                    </svg>
+                </div>
+            </div>
+            <button style="padding: 12px 30px; background-color: #ccc; border: none; border-radius: 20px; font-size: 1.2em; cursor: pointer;">抽獎中...</button>
+        </div>
+    </div>
+
+    <!-- 頁腳 -->
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>關於高鐵假期</h3>
+                <ul class="footer-links">
+                    <li><a href="#">公司簡介</a></li>
+                    <li><a href="#">服務條款</a></li>
+                    <li><a href="#">隱私權政策</a></li>
+                    <li><a href="#">常見問題</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>熱門目的地</h3>
+                <ul class="footer-links">
+                    <li><a href="#">台北</a></li>
+                    <li><a href="#">台中</a></li>
+                    <li><a href="#">高雄</a></li>
+                    <li><a href="#">台南</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>旅遊資訊</h3>
+                <ul class="footer-links">
+                    <li><a href="#">最新優惠</a></li>
+                    <li><a href="#">行程規劃</a></li>
+                    <li><a href="#">套票方案</a></li>
+                    <li><a href="#">景點介紹</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>聯絡我們</h3>
+                <ul class="footer-links">
+                    <li><a href="#">客服專線</a></li>
+                    <li><a href="#">意見回饋</a></li>
+                    <li><a href="#">合作提案</a></li>
+                    <li><a href="#">媒體聯繫</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 高鐵假期. 版權所有。 本網站僅供演示使用。</p>
+        </div>
+    </div>
+
+    <!-- 在這裡添加您的React抽獎系統腳本 -->
+    <script>
+        // 這裡您可以放置初始化React抽獎系統的代碼
+        // 或者用於模擬抽獎功能的JavaScript代碼
+        // 例如：
+        document.querySelector('#lottery-container button').addEventListener('click', function() {
+            alert('這是一個演示按鈕，實際使用時將連接到您的React抽獎系統');
+        });
+    </script>
+</body>
+</html>
